@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+def setup():
+    os.system('pyflakes . > .flakes_res')
+    os.system('pep8 . --ignore E111 > .pep8_res')
+
+def test():
+    lines = open('.flakes_res', 'r').readlines()
+    if len(lines) > 0:
+        print 'Detected python errors:'
+        print ''.join(lines)
+        return False
+
+    lines = open('.pep8_res', 'r').readlines()
+    if len(lines) > 0:
+        print 'Detected python errors:'
+        print ''.join(lines)
+        return False
+
+    return True
+
+def teardown():
+    try:
+        os.remove('.flakes_res')
+        os.remove('.pep8_res')
+    except OSError:
+        pass
+
+
+if __name__ == '__main__':
+    # TODO -- include unittest?
+    # TOOD -- should only run on diff'd files
+    setup()
+    res = test()
+    teardown()
+    sys.exit(1 if not res else 0)
