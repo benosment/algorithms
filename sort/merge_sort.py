@@ -3,6 +3,10 @@
 # Ben Osment
 # Sun May 26 17:24:32 EDT 2013
 
+import unittest
+import random
+# TODO -- add a hook for running PEP check before commit? 
+
 def merge_sort(l):
   length = len(l)
   if length == 0 or length == 1:
@@ -34,9 +38,29 @@ def merge(a, b):
       c.append(a.pop(0))
     else:
       c.append(b.pop(0))
+
     
+class TestMergeSort(unittest.TestCase):
+  def test_basic_even_list(self):
+    # even list size
+    l = [random.randint(0, 100) for i in range(10)]
+    self.assertEqual(merge_sort(l), sorted(l))
+
+  def test_basic_odd_list(self):
+    # odd list size
+    l = [random.randint(0, 100) for i in range(21)]
+    self.assertEqual(merge_sort(l), sorted(l))
+
+  def test_large_list(self):
+    l = [random.randint(0, 100000) for i in range(10000)]
+    self.assertEqual(merge_sort(l), sorted(l))
+
+  def test_negative_values(self):
+    l = [random.randint(-100, 100) for i in range(10)]
+    self.assertEqual(merge_sort(l), sorted(l))
+
+  def test_null(self):
+    self.assertEqual(merge_sort([]), [])
 
 if __name__ == '__main__':
-  # TODO - call testing infra
-  sorted = merge_sort([1,4,3,2,5])
-  print sorted
+  unittest.main()
