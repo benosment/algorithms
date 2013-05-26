@@ -24,7 +24,6 @@ def merge(a, b):
     return a
   c = [] # result list
   while True:
-    # TODO -- are there some list iterators for Python?
     if len(a) == 0:
       # list a is exhausted, append remainder of b
       c.extend(b)
@@ -35,6 +34,7 @@ def merge(a, b):
       return c
     # lists are not exhausted, compare the first element in each list
     if a[0] <= b[0]:
+      # TODO - is it faster to use an index instead of pop?
       c.append(a.pop(0))
     else:
       c.append(b.pop(0))
