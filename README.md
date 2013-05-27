@@ -18,7 +18,7 @@ Dynamic Progamming Paradigm:
 Notes
 -----
 
-If you want to run the pre-commit hook simply do the following:
+If you want to use the pre-commit hook:
 
     $ cp pre-commit .git/hooks/pre-commit
     $ chmod +x .git/hooks/pre-commit

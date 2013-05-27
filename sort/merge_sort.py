@@ -5,7 +5,6 @@
 
 import unittest
 import random
-# TODO -- add a hook for running PEP check before commit?
 
 
 def merge_sort(l):
@@ -14,8 +13,8 @@ def merge_sort(l):
     return l
   else:
     mid = length / 2
-    first_half = l[mid:]
-    second_half = l[:mid]
+    first_half = l[:mid]
+    second_half = l[mid:]
     return merge(merge_sort(first_half),
                  merge_sort(second_half))
 
