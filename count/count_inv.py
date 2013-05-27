@@ -5,20 +5,22 @@
 
 import unittest
 
-""" 
-An inversion is when an element of a list is larger than an 
+"""
+An inversion is when an element of a list is larger than an
 element with a higher index
 
 Example:
   l = [1, 3, 5, 2, 4, 6]
-  
+
   There are three inversions in l, (3,2), (5,2), (5,4)
 """
+
 
 def count_inv(l):
   # wrapper around count_inv
   sorted_array, count = count_inv_helper(l)
   return count
+
 
 def count_inv_helper(l):
   """ return the number of inversions """
@@ -38,12 +40,12 @@ def count_inv_helper(l):
 
 
 def inv_merge(a, b):
-  """ merges the list and returns a sorted list with the 
+  """ merges the list and returns a sorted list with the
       number of inversions """
   if not a:
-    return b, 0 # no inversions with an empty list
+    return b, 0  # no inversions with an empty list
   if not b:
-    return a, 0 # no inversions with an empty list
+    return a, 0  # no inversions with an empty list
   c = []  # result list
   count = 0
   while True:
@@ -67,12 +69,28 @@ def inv_merge(a, b):
       c.append(b.pop(0))
 
 
+def count_inv_in_file(filename):
+  """ open a file and read each number (one per line) """
+  l = [ ] 
+  with open(filename) as f:
+    for line in f.readlines():
+      print int(line.strip())
+      l.append(int(line.strip()))
+  print "length", len(l)
+  return count_inv(l)
 
 class TestCountingInversions(unittest.TestCase):
   def test_basic_inv(self):
     l = [1, 3, 5, 2, 4, 6]
     self.assertEqual(count_inv(l), 3)
 
+  def test_large_inv(self):
+    # use a file with 10k numbers, no repeats
+    l = [] 
+    with open("data/IntegerArray.txt") as f:
+      for line in f.readlines():
+        l.append(int(line.strip()))
+    self.assertEqual(count_inv(l), 2407905288)
 
 if __name__ == '__main__':
   unittest.main()
