@@ -69,16 +69,6 @@ def inv_merge(a, b):
       c.append(b.pop(0))
 
 
-def count_inv_in_file(filename):
-  """ open a file and read each number (one per line) """
-  l = [ ] 
-  with open(filename) as f:
-    for line in f.readlines():
-      print int(line.strip())
-      l.append(int(line.strip()))
-  print "length", len(l)
-  return count_inv(l)
-
 class TestCountingInversions(unittest.TestCase):
   def test_basic_inv(self):
     l = [1, 3, 5, 2, 4, 6]
@@ -86,7 +76,7 @@ class TestCountingInversions(unittest.TestCase):
 
   def test_large_inv(self):
     # use a file with 10k numbers, no repeats
-    l = [] 
+    l = []
     with open("data/IntegerArray.txt") as f:
       for line in f.readlines():
         l.append(int(line.strip()))

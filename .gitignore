@@ -35,4 +35,4 @@ nosetests.xml
 .pydevproject
 
 # ignore emacs temp files
-.~
+*~
