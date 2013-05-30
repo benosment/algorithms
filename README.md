@@ -5,6 +5,7 @@ Various implementations of Algorithms:
 
 Divide and Conquer Paradigm:
  - sort/merge_sort
+ - sort/quicksort
  - count/counting_inversions
  - count/closest_pair
 

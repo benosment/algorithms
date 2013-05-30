@@ -8,28 +8,32 @@ import random
 
 # TODO -- have some util to measure the time for sorting 1 million integers
 # with mergesort, quicksort, randomized quicksort and parallel quicksort
+# also quicksort in place and with copies
 
 
-def quicksort(l):
-  return qsort_helper(l, len(l))
+def swap(l, a, b):
+  l[a], l[b] = l[b], l[a]
 
 
-def qsort_helper(l, n):
+def orig_quicksort(l):
+  return orig_qsort_helper(l, len(l))
+
+
+def orig_qsort_helper(l, n):
   if n <= 1:
     return l
-  # partition
-  l, pivot = partition(l)
+  l, pivot = orig_partition(l)
   # split into left of pivot and right of pivot
   left = l[:pivot]
   pivot_element = [l[pivot]]
   right = l[pivot + 1:]
   # recursively call on the left and right
   # TODO - parallelize this operation?
-  return qsort_helper(left, len(left)) + pivot_element + \
-      qsort_helper(right, len(right))
+  return orig_qsort_helper(left, len(left)) + pivot_element + \
+      orig_qsort_helper(right, len(right))
 
 
-def partition(l):
+def orig_partition(l):
   # TODO have a randomized partition
   pivot = 0
   i = 1
@@ -37,13 +41,42 @@ def partition(l):
   for j in range(1, len(l)):
     if l[j] < pivot_value:
       # if less, swap
-      l[i], l[j] = l[j], l[i]
-      #swap(l, i, j)
+      swap(l, i, j)
       i += 1
   # swap the pivot into place
-  #swap(l, pivot, i-1)
+  swap(l, pivot, i - 1)
   l[pivot], l[i - 1] = l[i - 1], l[pivot]
   return l, i - 1
+
+
+def quicksort(l):
+  qsort_helper(l, 0, len(l))
+  return l
+
+
+def qsort_helper(l, beg, end):
+  if (end - beg) <= 1:
+    return
+  # partition
+  pivot = partition(l, beg, end)
+  # split into left of pivot and right of pivot
+  qsort_helper(l, beg, pivot)
+  qsort_helper(l, pivot + 1, end)
+
+
+def partition(l, beg, end):
+  # TODO have a randomized partition
+  pivot = beg
+  i = beg + 1
+  pivot_value = l[pivot]
+  for j in range(beg + 1, end):
+    if l[j] < pivot_value:
+      # if less, swap
+      swap(l, i, j)
+      i += 1
+  # swap the pivot into place
+  swap(l, pivot, i - 1)
+  return i - 1  # final position of pivot
 
 
 class TestQuickSort(unittest.TestCase):
